@@ -9,6 +9,7 @@ import com.expensesmanager.frame.CommandsFrame;
 import com.expensesmanager.manager.CommandsHandler;
 import com.expensesmanager.manager.ExpensesManager;
 import com.expensesmanager.entity.ExpensesData;
+import com.expensesmanager.manager.Handler;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 
@@ -36,7 +37,7 @@ public class Main {
     private void startAPI() {
         
         ExpensesManager em = new ExpensesManager();
-        CommandsHandler handler = new CommandsHandler(em);
+        Handler handler = new Handler(em);
         
         JTextArea output = commandsFrame.getOutput();
         
