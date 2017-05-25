@@ -7,8 +7,8 @@ package com.expensesmanager.manager;
 
 import com.expensesmanager.manager.interfaces.Manager;
 import com.expensesmanager.exchangers.Exchanger;
-import com.expensesmanger.entity.Expense;
-import com.expensesmanger.entity.ExpensesData;
+import com.expensesmanager.entity.Expense;
+import com.expensesmanager.entity.ExpensesData;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Locale;

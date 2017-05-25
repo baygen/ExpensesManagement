@@ -5,10 +5,10 @@
  */
 package expensesmanager;
 
-import com.expansesmanager.frame.CommandsFrame;
+import com.expensesmanager.frame.CommandsFrame;
 import com.expensesmanager.manager.CommandsHandler;
 import com.expensesmanager.manager.ExpensesManager;
-import com.expensesmanger.entity.ExpensesData;
+import com.expensesmanager.entity.ExpensesData;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 
@@ -16,18 +16,18 @@ import javax.swing.JTextArea;
  *
  * @author Buy
  */
-public class Starter {
+public class Main {
 
     CommandsFrame commandsFrame;
     
-    public Starter(CommandsFrame frame){
+    public Main(CommandsFrame frame){
         this.commandsFrame = frame;
         
     }
     
     public static void main(String[] args) {
         
-        Starter st = new Starter(new CommandsFrame());
+        Main st = new Main(new CommandsFrame());
         st.startFrame();
         st.startAPI();
             

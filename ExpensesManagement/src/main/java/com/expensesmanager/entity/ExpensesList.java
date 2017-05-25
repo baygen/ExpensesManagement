@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.expensesmanger.entity;
+package com.expensesmanager.entity;
 
+import com.expensesmanager.entity.Expense;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

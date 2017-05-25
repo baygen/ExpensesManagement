@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.expansesmanager.frame;
+package com.expensesmanager.frame;
 
 import javax.swing.JButton;
 import javax.swing.JTextArea;
