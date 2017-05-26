@@ -86,8 +86,8 @@ public class ExpensesManager implements Manager{
             list.remove(date);
             newsize = list.keySet().size() - newsize;
         }else{
-            JOptionPane.showMessageDialog(null,"Can't remove "+date + 
-                     "purchases becouse 'Yoy didn't add purchases for that date.'");
+            JOptionPane.showMessageDialog(null,"Can't remove choosen date because: "
+                    + "'Yoy didn't made purchases at that date.'");
         }
         setResultList();
         
