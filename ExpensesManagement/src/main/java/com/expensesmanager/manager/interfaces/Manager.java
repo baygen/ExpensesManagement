@@ -6,7 +6,6 @@
 package com.expensesmanager.manager.interfaces;
 
 import java.time.LocalDate;
-import java.util.Map;
 
 
 /**
@@ -15,7 +14,7 @@ import java.util.Map;
  */
 public interface Manager {
     
-    int addPurhase(Object[] data);
+    int addPurhase(LocalDate date, double price, String currency, String product);
     
     void setResultList();
     

@@ -5,6 +5,8 @@
  */
 package com.expensesmanager.manager.interfaces;
 
+import java.time.LocalDate;
+
 /**
  *
  * @author Buy
@@ -14,21 +16,21 @@ public interface CheckInputValues {
     /**
      * Checked if value suitable for currency criteria 
      * @param currency value to check
-     * @return true if value accepted
+     * @return currency if value accepted or null if not
      */
-    boolean checkForCurrency(String currency);
+    String checkForCurrency(String currency);
     
     /**
      * Checked if date value is correct
      * @param date string to be checked
-     * @return true if correct
+     * @return date if it correct or null if not
      */
-    boolean checkForDate(String date);
+    LocalDate checkForDate(String date);
     
     /**
      *
      * @param price values to be checked
-     * @return true if price is number
+     * @return price in number format if correct or 0 if not
      */
-    boolean checkForPrice(String price);
+    double checkForPrice(String price);
 }

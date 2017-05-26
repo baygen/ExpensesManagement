@@ -36,12 +36,7 @@ public class ExpensesManager implements Manager{
     }
    
     @Override
-    public int addPurhase(Object[] data) {
-        
-        LocalDate date=(LocalDate)data[0];
-        double price = (double)data[1];
-        String currency = ((String)data[2]).toUpperCase();
-        String product = (String)data[3];
+    public int addPurhase(LocalDate date,double price,String currency,String product) {
         
         Expense expense = new Expense(product, currency, price);
         ArrayList<Expense> value;

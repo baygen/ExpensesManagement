@@ -17,10 +17,14 @@ import javax.swing.JOptionPane;
  */
 public abstract class CommandsHandler implements CheckInputValues, IncomingCommandsHandler {
     
-    protected Object[] data;
+//    protected Object[] data;
     protected final ExpensesManager em;
     protected String res;
     protected boolean accept;
+    protected LocalDate date;
+    protected String currency;
+    protected double price ;
+    protected String product;
     
     public CommandsHandler(ExpensesManager manager) {
         this.em=manager;
@@ -32,7 +36,7 @@ public abstract class CommandsHandler implements CheckInputValues, IncomingComma
         switch (reqcommand) {
             case "add":
                 if (commandAdd(requested)) {
-                    em.addPurhase(data);
+                    em.addPurhase(date,price,currency,product);
                     break;
                 }
                 break;
@@ -44,13 +48,13 @@ public abstract class CommandsHandler implements CheckInputValues, IncomingComma
                 break;
             case "clear":
                 if (commandClear(requested)) {
-                    em.removePurchaseByDate((LocalDate) data[0]);
+                    em.removePurchaseByDate(date);
                     break;
                 }
                 break;
             case "total":
                 if (commandTotal(requested)) {
-                    em.getTotalSpentInCurrency((String) data[0]);
+                    em.getTotalSpentInCurrency(currency);
                 }
                 break;
             case "help":
@@ -71,15 +75,20 @@ public abstract class CommandsHandler implements CheckInputValues, IncomingComma
         int size = requested.length;
         //We checked if users input acceptance our criteria
         if (size > 4) {
-            if (checkForCurrency(requested[3]) && checkForDate(requested[1]) && checkForPrice(requested[2])) {
-                LocalDate date = LocalDate.parse(requested[1]);
-                double price = Double.parseDouble(requested[2]);
-                String currency = requested[3];
-                String product = "";
+            
+            LocalDate dateInp = checkForDate(requested[1]);
+            double priceInp = checkForPrice(requested[2]);
+            String currencyInp = checkForCurrency(requested[3]);
+            
+            if ((!(dateInp == null))&&priceInp!=0&&currencyInp!=null) {
+                this.date=dateInp;
+                this.currency = currencyInp;
+                this.price = priceInp;
+                String products = "";
                 for (int i = 4; i < size; i++) {
-                    product = product + " " + requested[i];
+                    products = products + " " + requested[i];
                 }
-                data = new Object[]{date, price, currency, product};
+                this.product=products;
                 accept = true;
             }
         } else {
@@ -100,10 +109,13 @@ public abstract class CommandsHandler implements CheckInputValues, IncomingComma
 
     private boolean commandClear(String[] requested) {
         accept = false;
-        if (requested.length == 2 && checkForDate(requested[1])) {
+        if (requested.length == 2){
+                   
+            LocalDate dateExpense = checkForDate(requested[1]);
+            if(dateExpense!=null){
+            this.date = dateExpense;
             accept = true;
-            LocalDate date = LocalDate.parse(requested[1]);
-            data = new Object[]{date};
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Wrong value for command");
         }
@@ -113,9 +125,9 @@ public abstract class CommandsHandler implements CheckInputValues, IncomingComma
     private boolean commandTotal(String[] requested) {
         accept = false;
         if (requested.length == 2) {
-            if (Exchanger.checkCurrency(requested[1])) {
+            if(checkForCurrency(requested[1])!=null){ 
                 accept = true;
-                data = new Object[]{requested[1]};
+                this.currency=requested[1];
             } else {
                 JOptionPane.showMessageDialog(null, "Can't convert to " + requested[1]);
                 accept = false;
@@ -134,12 +146,12 @@ public abstract class CommandsHandler implements CheckInputValues, IncomingComma
     }
 
     @Override
-    public abstract boolean checkForCurrency(String currency);
+    public abstract String checkForCurrency(String currency);
 
     @Override
-    public abstract boolean checkForDate(String dateString);
+    public abstract LocalDate checkForDate(String dateString);
 
     @Override
-    public abstract boolean checkForPrice(String price);
+    public abstract double checkForPrice(String price);
     
 }

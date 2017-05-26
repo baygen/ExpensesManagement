@@ -5,14 +5,9 @@
  */
 package com.expensesmanager.manager;
 
-import com.expensesmanager.manager.interfaces.IncomingCommandsHandler;
 import com.expensesmanager.exchangers.Exchanger;
-import com.expensesmanager.manager.interfaces.CheckInputValues;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -28,16 +23,15 @@ public final class Handler extends CommandsHandler {
    
 
     @Override
-    public boolean checkForCurrency(String currency) {
+    public String checkForCurrency(String currency) {
         
-        boolean passed;
-        passed = false;
+        String currencyInput = null;
         if(currency.length()==3){
             
                 if(Exchanger.checkCurrency(currency)){
-                    passed = true;
+                   currencyInput = currency;
+                    
                 }else{
-                System.out.println("com.expensesmanager.manager.CommandsHandler.checkForCurrency()");
                 
                 String warning="This currency: "+currency.toUpperCase()
                         +", doesn't exist at fixer.io. "+System.lineSeparator()
@@ -45,39 +39,41 @@ public final class Handler extends CommandsHandler {
                         + "the calculation of total spents"+System.lineSeparator()
                         + " Do you want to continue? ";
             if(JOptionPane.showConfirmDialog(null, warning)==JOptionPane.YES_OPTION)
-                passed = true;
+                currencyInput = currency;
                 }
             
         }else if(currency.length()!=3){
             JOptionPane.showMessageDialog(null, currency+" is not currency format");
         }
-        return passed;
+        return currencyInput;
     }
 
     @Override
-    public boolean checkForDate(String dateString) {
+    public LocalDate checkForDate(String dateString) {
         
-        boolean passed = false;
+        LocalDate inputDate;
+        inputDate = null;
         try{
-            LocalDate.parse(dateString);
-            passed=true;
+            inputDate=LocalDate.parse(dateString);
+//            super.
         }catch(DateTimeParseException e){
             JOptionPane.showMessageDialog(null, "Wrong date format");
         }    
         
-        return passed;
+        return inputDate;
     }
 
     @Override
-    public boolean checkForPrice(String price) {
-        boolean passed = false;
+    public double checkForPrice(String price) {
+        double inpPrice = 0;
         try{
-            Double.parseDouble(price);
-            passed = true;
+            if(Double.parseDouble(price)>0)
+                inpPrice = Double.parseDouble(price);
+            
         }catch(NumberFormatException e){
             JOptionPane.showMessageDialog(null, price+" is wrong value for price");
         }
-        return passed;
+        return inpPrice;
     }
 
  
