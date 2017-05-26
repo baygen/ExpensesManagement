@@ -4,9 +4,8 @@ Hi,
 
 You can run this application in two ways:
 1. 
-  a) Go to the link <a href="
-https://drive.google.com/open?id=0B-JRaQidxWGEZ0dfdHZ2N0RQOTg"> here</a>
-  b) Download ExpensesManagerJar.zip file
+  a) Go to the link https://drive.google.com/open?id=0B-JRaQidxWGEZ0dfdHZ2N0RQOTg
+  b) Download ExpensesManagerJAR.zip file
   c) Extract it into some folder
   d) Run jar file via command line using command : java -jar "PATHTOFILE\ExpensesManager.jar"
 
