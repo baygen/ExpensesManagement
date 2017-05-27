@@ -25,7 +25,7 @@ public class Expense implements Serializable{
 
     public Expense(String product, String currency, double price) {
         this.product = product;
-        this.currency = currency;
+        this.currency = currency.toUpperCase();
         this.price = price;
     }
     
@@ -38,7 +38,7 @@ public class Expense implements Serializable{
     }
     
     public void setCurrency(String currency){
-        this.currency= currency;
+        this.currency = currency.toUpperCase();
     }
     
     public String getCurrency(){
@@ -74,7 +74,7 @@ public class Expense implements Serializable{
 
     @Override
     public String toString() {
-        String res =product + " "+ getPriceForToString()+" "+currency; 
+        String res = ""+product + " "+ getPriceForToString()+" "+currency+"\n"; 
         return res;
     }
     
