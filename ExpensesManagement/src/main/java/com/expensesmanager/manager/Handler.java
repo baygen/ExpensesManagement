@@ -55,7 +55,6 @@ public final class Handler extends CommandsHandler {
         inputDate = null;
         try{
             inputDate=LocalDate.parse(dateString);
-//            super.
         }catch(DateTimeParseException e){
             JOptionPane.showMessageDialog(null, "Wrong date format");
         }    
@@ -67,11 +66,18 @@ public final class Handler extends CommandsHandler {
     public double checkForPrice(String price) {
         double inpPrice = 0;
         try{
-            if(Double.parseDouble(price)>0)
-                inpPrice = Double.parseDouble(price);
+            double input=Double.parseDouble(price);
+            
+//            Check if price corerect typed only with no more than two number
+//            after coma
+            if(input>0&&Double.compare(Math.round(input*100), input*100)==0){
+                inpPrice=input;
+            }else{
+                throw new NumberFormatException("Price must be greater than 0, and only with two number after comma");
+            }
             
         }catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(null, price+" is wrong value for price");
+//            JOptionPane.showMessageDialog(null, e.getMessage());
         }
         return inpPrice;
     }
