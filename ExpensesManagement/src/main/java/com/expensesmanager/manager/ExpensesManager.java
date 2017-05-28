@@ -8,10 +8,8 @@ package com.expensesmanager.manager;
 import com.expensesmanager.manager.interfaces.Manager;
 import com.expensesmanager.exchangers.Exchanger;
 import com.expensesmanager.entity.Expense;
-import com.expensesmanager.entity.ExpensesData;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 import javax.swing.JOptionPane;
@@ -31,26 +29,37 @@ public class ExpensesManager implements Manager{
         this.list = new TreeMap<>();
     }
 
-    public ExpensesManager(ExpensesData list) {
-        this.list= list.getList();
+    public ExpensesManager(TreeMap<LocalDate,ArrayList<Expense>> list) {
+        this.list= list;
     }
    
+    /**
+     *
+     * @param date 
+     * @param price of product
+     * @param currency 
+     * @param product
+     * @return 1 when purchase added, and 0 when not
+     */
     @Override
     public int addPurhase(LocalDate date,double price,String currency,String product) {
         
         Expense expense = new Expense(product, currency, price);
         ArrayList<Expense> value;
-        
+        int res = 0;
 //      Checking if date is exist in map
         if(list.keySet().contains(date)){
+            int start=list.get(date).size();
             list.get(date).add(expense);
+            res = list.get(date).size()-start;
         }else{
             value = new ArrayList<>();
             value.add(expense);
             list.put(date,value);
+            res=1;
         }
         setResultList();
-        return list.get(date).size();
+        return res;
     }
 
     @Override
@@ -58,15 +67,15 @@ public class ExpensesManager implements Manager{
         
         if(getList().size()>0){
         
-            this.result="";
+            result="";
         for (Map.Entry<LocalDate, ArrayList<Expense>> entry : getList().entrySet()) {
             
-            result = result + entry.getKey().toString()+System.lineSeparator();
+            result = result + entry.getKey()+"\n";
             
             entry.getValue().forEach((expense) -> {
-                result = result+ expense.toString()+System.lineSeparator();
+                result = result+expense+"\n";
             });
-            result = result + System.lineSeparator();
+            result = result + "\n";
         }
         }else{
             JOptionPane.showMessageDialog(null, "Your list is empty.");
@@ -80,14 +89,19 @@ public class ExpensesManager implements Manager{
      */
     @Override
     public int removePurchaseByDate(LocalDate date) {
-        
-        int newsize=list.keySet().size();
+        int newsize;
+        try{
+        newsize=list.keySet().size();
         if(list.containsKey(date)){
             list.remove(date);
             newsize = list.keySet().size() - newsize;
         }else{
             JOptionPane.showMessageDialog(null,"Can't remove choosen date because: "
                     + "'Yoy didn't add purchases for that date.'");
+            newsize=0;
+        }
+        }catch(NullPointerException e){
+            newsize=0;
         }
         setResultList();
         
@@ -101,7 +115,7 @@ public class ExpensesManager implements Manager{
         try{
         Exchanger exchanger = new Exchanger(currency);
                 
-        for (Map.Entry<LocalDate, ArrayList<Expense>> entry : list.entrySet()) {
+        for (Map.Entry<LocalDate, ArrayList<Expense>> entry : getList().entrySet()) {
 
             ArrayList<Expense> value = entry.getValue();
                 
@@ -111,36 +125,37 @@ public class ExpensesManager implements Manager{
                    spentSum = spentSum+price;
                 }else{
                     double currencyRate=exchanger.getExchangeRate(expanse.getCurrency());
-                   spentSum = spentSum + price*currencyRate;
+                    
+                    double res = currencyRate*price*100;
+                    res=Math.round(res);
+                    res=res/100;
+                    
+                   spentSum = spentSum + res;
                 }                
             });
         }
         }catch(NullPointerException e){
             JOptionPane.showMessageDialog(null,"Can't calculate total spent because: Your list is empty.");
         }
-        result = displayTotal(spentSum,currency);
+        result = spentSum +" "+currency.toUpperCase();
         return spentSum;
     }
     
     
     public TreeMap<LocalDate, ArrayList<Expense>> getList(){
-         return list;
+         return this.list;
     }
 
-    private String displayTotal(Double sum, String currency) {
-        result = "";
-        return String.format(Locale.US,"%.2f", sum)+" "+ currency.toUpperCase();
-    }
-
+    
     public String getResult() {
         
-        return result;
+        return this.result;
     }
 
     @Override
     public String getHelp() {
         final String newLine=System.lineSeparator();
-        String helpMessage =
+        final String helpMessage =
                   "Commands list:"+ newLine
                 + "     'add 2017-05-25 10.45 USD Apple' - adds expense entry to the list"+ newLine
                 +newLine
@@ -164,7 +179,6 @@ public class ExpensesManager implements Manager{
     }
 
     void getHelpCommand() {
-        result = "";
         result = getHelp();
     }
 }
