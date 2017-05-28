@@ -74,7 +74,7 @@ public class Expense implements Serializable{
 
     @Override
     public String toString() {
-        String res = ""+product + " "+ getPriceForToString()+" "+currency+"\n"; 
+        String res = product + " "+ getPriceForToString()+" "+currency; 
         return res;
     }
     
