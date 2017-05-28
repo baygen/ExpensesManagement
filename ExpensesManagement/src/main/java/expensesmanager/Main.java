@@ -6,9 +6,7 @@
 package expensesmanager;
 
 import com.expensesmanager.frame.CommandsFrame;
-import com.expensesmanager.manager.CommandsHandler;
 import com.expensesmanager.manager.ExpensesManager;
-import com.expensesmanager.entity.ExpensesData;
 import com.expensesmanager.manager.Handler;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
@@ -31,7 +29,7 @@ public class Main {
         Main st = new Main(new CommandsFrame());
         st.startFrame();
         st.startAPI();
-            
+
     }
     
     private void startAPI() {
@@ -47,8 +45,6 @@ public class Main {
             String[] commandsInput = command.split("\\s");
             String res;
             res = handler.doRequest(commandsInput);
-//            res = em.getResult();
-                    
             output.setText(res);
             
         });
