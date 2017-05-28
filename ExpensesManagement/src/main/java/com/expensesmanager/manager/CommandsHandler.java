@@ -84,8 +84,8 @@ public abstract class CommandsHandler implements CheckInputValues, IncomingComma
                 this.date=dateInp;
                 this.currency = currencyInp;
                 this.price = priceInp;
-                String products = "";
-                for (int i = 4; i < size; i++) {
+                String products = requested[4];
+                for (int i = 5; i < size; i++) {
                     products = products + " " + requested[i];
                 }
                 this.product=products;
