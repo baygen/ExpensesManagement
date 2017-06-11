@@ -14,6 +14,7 @@ import java.util.TreeMap;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.runners.Parameterized;
 
@@ -23,16 +24,17 @@ import org.junit.runners.Parameterized;
  */
 public class ExpensesManagerTest {
     
-    static ExpensesManager instance;
+    ExpensesManager instance;
     public ExpensesManagerTest() {
     }
     
-    @BeforeClass
-    public static void setUpClass() {
+    @Before
+    public void setUp() {
         TreeMap<LocalDate,ArrayList<Expense>> data= new TreeMap<>();
         ArrayList<Expense> value=new ArrayList<>();
         value.add(new Expense("apple", "PLN", 40));
         data.put(LocalDate.now(), value);
+        value.add(new Expense("Mac","USD",32.5));
         data.put(LocalDate.now().minusMonths(1), value);
         instance = new ExpensesManager(data);
     }

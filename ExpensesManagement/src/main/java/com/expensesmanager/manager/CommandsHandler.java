@@ -8,6 +8,7 @@ package com.expensesmanager.manager;
 import com.expensesmanager.exchangers.Exchanger;
 import com.expensesmanager.manager.interfaces.CheckInputValues;
 import com.expensesmanager.manager.interfaces.IncomingCommandsHandler;
+import com.expensesmanager.manager.interfaces.Manager;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
 
@@ -18,7 +19,7 @@ import javax.swing.JOptionPane;
 public abstract class CommandsHandler implements CheckInputValues, IncomingCommandsHandler {
     
 //    protected Object[] data;
-    protected final ExpensesManager em;
+    protected final Manager em;
     protected String res;
     protected boolean accept;
     protected LocalDate date;
@@ -26,7 +27,7 @@ public abstract class CommandsHandler implements CheckInputValues, IncomingComma
     protected double price ;
     protected String product;
     
-    public CommandsHandler(ExpensesManager manager) {
+    public CommandsHandler(Manager manager) {
         this.em=manager;
     }
 
@@ -70,7 +71,7 @@ public abstract class CommandsHandler implements CheckInputValues, IncomingComma
         return res;
     }
 
-    private boolean commandAdd(String[] requested) {
+    public boolean commandAdd(String[] requested) {
         accept = false;
         int size = requested.length;
         //We checked if users input acceptance our criteria

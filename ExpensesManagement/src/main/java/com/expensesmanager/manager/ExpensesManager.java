@@ -43,7 +43,9 @@ public class ExpensesManager implements Manager{
      */
     @Override
     public int addPurhase(LocalDate date,double price,String currency,String product) {
-        
+        if(price >0){
+            throw new IllegalArgumentException("error");
+        }
         Expense expense = new Expense(product, currency, price);
         ArrayList<Expense> value;
         int res = 0;
@@ -178,7 +180,7 @@ public class ExpensesManager implements Manager{
         return helpMessage;
     }
 
-    void getHelpCommand() {
+    public void getHelpCommand() {
         result = getHelp();
     }
 }

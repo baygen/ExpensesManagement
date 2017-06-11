@@ -23,5 +23,9 @@ public interface Manager {
     double getTotalSpentInCurrency(String currency);
     
     String getHelp();
+
+    public void getHelpCommand();
+
+    public String getResult();
   
 }
